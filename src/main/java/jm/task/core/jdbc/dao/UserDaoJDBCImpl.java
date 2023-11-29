@@ -8,17 +8,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserDaoJDBCImpl implements UserDao {
-    final private Connection connection = Util.getConnection();
+
+    final private Connection connection = Util.getConnection();//todo: внедряемся - через конструктор
+
+    //todo: выносим переменные, как в примере ниже.. Правильное наименование.
+    String createUsersQuery = "CREATE TABLE IF NOT EXISTS Users " +
+            "(id INTEGER AUTO_INCREMENT, " +
+            " name VARCHAR(255), " +
+            " lastName VARCHAR(255), " +
+            " age TINYINT, " +
+            " PRIMARY KEY ( id ))";
 
     public void createUsersTable() {
         try (Statement statement = connection.createStatement()) {
-            String sql = "CREATE TABLE IF NOT EXISTS Users " +
-                    "(id INTEGER AUTO_INCREMENT, " +
-                    " name VARCHAR(255), " +
-                    " lastName VARCHAR(255), " +
-                    " age TINYINT, " +
-                    " PRIMARY KEY ( id ))";
-            statement.execute(sql);
+            statement.execute(createUsersQuery);
         } catch (SQLException e) {
             System.out.println("An error occurred while creating the table" + e.getMessage());
         }
