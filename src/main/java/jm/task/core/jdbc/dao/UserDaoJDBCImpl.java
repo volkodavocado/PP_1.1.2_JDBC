@@ -10,6 +10,7 @@ import java.util.List;
 public class UserDaoJDBCImpl implements UserDao {
 
     Connection connection;
+
     public UserDaoJDBCImpl() {
         this.connection = new Util().getConnection();
     }
@@ -20,11 +21,15 @@ public class UserDaoJDBCImpl implements UserDao {
             " lastName VARCHAR(255), " +
             " age TINYINT, " +
             " PRIMARY KEY ( id ))";
+
     String dropUsersQuery = "DROP TABLE IF EXISTS Users";
-    String insertQuery = "INSERT INTO Users(name, lastName, age)" +
-            " VALUES (?, ?, ?)";
+
+    String insertQuery = "INSERT INTO Users(name, lastName, age) VALUES (?, ?, ?)";
+
     String deleteUserQuery = "DELETE FROM Users WHERE id = ?";
+
     String getAllUsersQuery = "SELECT * FROM Users";
+
     String cleanUsersQuery = "TRUNCATE TABLE Users";
 
     public void createUsersTable() {
@@ -47,11 +52,9 @@ public class UserDaoJDBCImpl implements UserDao {
 
     public void saveUser(String name, String lastName, byte age) {
         try (PreparedStatement statement = connection.prepareStatement(insertQuery)) {
-
             statement.setString(1, name);
             statement.setString(2, lastName);
             statement.setByte(3, age);
-
             statement.executeUpdate();
         } catch (SQLException e) {
             System.out.println("An error occurred while saving the user" + e.getMessage());
@@ -75,7 +78,6 @@ public class UserDaoJDBCImpl implements UserDao {
         try (Statement statement =
                      connection.createStatement()) {
             ResultSet resultSet = statement.executeQuery(getAllUsersQuery);
-
             while (resultSet.next()) {
                 User newUser = new User();
                 newUser.setId(resultSet.getLong(1));
@@ -85,7 +87,6 @@ public class UserDaoJDBCImpl implements UserDao {
                 userList.add(newUser);
                 System.out.println(newUser);
             }
-
         } catch (SQLException e) {
             System.out.println("An error occurred while getting all users" + e.getMessage());
         }
