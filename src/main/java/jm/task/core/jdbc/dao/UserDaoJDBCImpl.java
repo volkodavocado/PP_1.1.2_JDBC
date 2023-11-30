@@ -9,15 +9,23 @@ import java.util.List;
 
 public class UserDaoJDBCImpl implements UserDao {
 
-    final private Connection connection = Util.getConnection();//todo: внедряемся - через конструктор
+    Connection connection;
+    public UserDaoJDBCImpl() {
+        this.connection = new Util().getConnection();
+    }
 
-    //todo: выносим переменные, как в примере ниже.. Правильное наименование.
     String createUsersQuery = "CREATE TABLE IF NOT EXISTS Users " +
             "(id INTEGER AUTO_INCREMENT, " +
             " name VARCHAR(255), " +
             " lastName VARCHAR(255), " +
             " age TINYINT, " +
             " PRIMARY KEY ( id ))";
+    String dropUsersQuery = "DROP TABLE IF EXISTS Users";
+    String insertQuery = "INSERT INTO Users(name, lastName, age)" +
+            " VALUES (?, ?, ?)";
+    String deleteUserQuery = "DELETE FROM Users WHERE id = ?";
+    String getAllUsersQuery = "SELECT * FROM Users";
+    String cleanUsersQuery = "TRUNCATE TABLE Users";
 
     public void createUsersTable() {
         try (Statement statement = connection.createStatement()) {
@@ -30,17 +38,14 @@ public class UserDaoJDBCImpl implements UserDao {
 
     public void dropUsersTable() {
         try (Statement statement = connection.createStatement()) {
-            statement.execute("DROP TABLE IF EXISTS Users");
+            statement.execute(dropUsersQuery);
         } catch (SQLException e) {
             System.out.println("An error occurred while deleting the table" + e.getMessage());
         }
         System.out.println("Table is deleted successful by JDBC");
     }
 
-    //проверить
     public void saveUser(String name, String lastName, byte age) {
-        String insertQuery = "INSERT INTO Users(name, lastName, age)" +
-                " VALUES (?, ?, ?)";
         try (PreparedStatement statement = connection.prepareStatement(insertQuery)) {
 
             statement.setString(1, name);
@@ -54,11 +59,9 @@ public class UserDaoJDBCImpl implements UserDao {
         System.out.println("User is saved successful by JDBC");
     }
 
-    //проверить
     public void removeUserById(long id) {
-        String sql = "DELETE FROM Users WHERE id = ?";
         try (PreparedStatement preparedStatement = connection
-                .prepareStatement(sql)) {
+                .prepareStatement(deleteUserQuery)) {
             preparedStatement.setLong(1, id);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -71,7 +74,7 @@ public class UserDaoJDBCImpl implements UserDao {
         List<User> userList = new ArrayList<>();
         try (Statement statement =
                      connection.createStatement()) {
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM Users");
+            ResultSet resultSet = statement.executeQuery(getAllUsersQuery);
 
             while (resultSet.next()) {
                 User newUser = new User();
@@ -92,7 +95,7 @@ public class UserDaoJDBCImpl implements UserDao {
 
     public void cleanUsersTable() {
         try (Statement statement = connection.createStatement()) {
-            statement.execute("TRUNCATE TABLE Users");
+            statement.execute(cleanUsersQuery);
         } catch (SQLException e) {
             System.out.println("An error occurred while cleaning the table" + e.getMessage());
         }

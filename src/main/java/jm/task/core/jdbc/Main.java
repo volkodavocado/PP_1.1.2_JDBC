@@ -3,33 +3,31 @@ package jm.task.core.jdbc;
 import jm.task.core.jdbc.dao.UserDao;
 import jm.task.core.jdbc.dao.UserDaoJDBCImpl;
 
-//todo: таки настаиваю - на 11jdk
-//todo: в README - нет полного описания задачи, пока привыкать к нормальному документированию проекта
-
 public class Main {
 
     public static void main(String[] args) {
-        UserDao userDaoJDBC = new UserDaoJDBCImpl();//todo: codeStyle ..достаточно - userDao, как и подсказывает IDE
+        UserDao userDao = new UserDaoJDBCImpl();
 
-        userDaoJDBC.dropUsersTable();
-        userDaoJDBC.createUsersTable();
-        userDaoJDBC.saveUser("Gendalf", "White", (byte) 120);
+        userDao.dropUsersTable();
+        userDao.createUsersTable();
+        userDao.saveUser("Gendalf", "White", (byte) 120);
         System.out.println("User с именем Gendalf добавлен в базу данных");
 
-        userDaoJDBC.saveUser("Frodo", "Baggins", (byte) 35);
+        userDao.saveUser("Frodo", "Baggins", (byte) 35);
         System.out.println("User с именем Frodo добавлен в базу данных");
 
-        userDaoJDBC.saveUser("Ulfric", "Stormcloak", (byte) 44);
+        userDao.saveUser("Ulfric", "Stormcloak", (byte) 44);
         System.out.println("User с именем Ulfric добавлен в базу данных");
 
-        userDaoJDBC.saveUser("Cole", "Phelps", (byte) 27);
+        userDao.saveUser("Cole", "Phelps", (byte) 27);
         System.out.println("User с именем Cole добавлен в базу данных");
 
-        //todo: не реализован п. Удаление User из таблицы ( по id )
+        userDao.removeUserById(1);
+        System.out.println("User удален из таблицы");
 
-        System.out.println(userDaoJDBC.getAllUsers().toString());
+        System.out.println(userDao.getAllUsers().toString());
 
-        userDaoJDBC.cleanUsersTable();
-        userDaoJDBC.dropUsersTable();
+        userDao.cleanUsersTable();
+        userDao.dropUsersTable();
     }
 }

@@ -6,14 +6,11 @@ import java.sql.SQLException;
 
 public class Util {
 
-    //todo: codeStyle, привыкаем аккуратно работать
-    //todo: + общие замечания (описаны в группе)
-    //todo: README просьба заполнять..
     private static final String DB_USERNAME = "root";
-    private static final String DB_PASSWORD = "my179sql";
+    private static final String DB_PASSWORD = "root";
     private static final String DB_URL = "jdbc:mysql://localhost:3306/mydatabase";
 
-    public static Connection getConnection() {//todo: избавляемся от static/ сломали парадигму ООП..
+    public Connection getConnection() {
         Connection connection;
         try {
             connection = DriverManager.getConnection(
