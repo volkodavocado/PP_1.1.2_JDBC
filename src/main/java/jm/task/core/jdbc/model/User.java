@@ -20,9 +20,11 @@ public class User {
 
     @Column(name = "age")
     private Byte age;
+
     public User() {
 
     }
+
     public User(String name, String lastName, Byte age) {
         this.name = name;
         this.lastName = lastName;
@@ -63,13 +65,7 @@ public class User {
 
     @Override
     public String toString() {
-        return getClass().getSimpleName() +
-                '{' +
-                " id = " + id +
-                ", name = '" + name + '\'' +
-                ", lastName = '" + lastName + '\'' +
-                ", age = " + age +
-                '}';
+        return getClass().getSimpleName() + '{' + " id = " + id + ", name = '" + name + '\'' + ", lastName = '" + lastName + '\'' + ", age = " + age + '}';
     }
 
     @Override

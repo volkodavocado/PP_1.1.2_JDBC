@@ -10,8 +10,5 @@
         <module name="PP_1.1.2_JDBC" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="TaskJDBC" target="11" />
-    </bytecodeTargetLevel>
   </component>
 </project>
