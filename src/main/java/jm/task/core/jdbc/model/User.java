@@ -2,20 +2,18 @@ package jm.task.core.jdbc.model;
 
 import javax.persistence.*;
 import java.util.Objects;
-
-@Table(name = "Users")
 @Entity
+@Table(name = "users")
 public class User {
-
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
+    @Column(name = "id")
+    @GeneratedValue (strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name", nullable = false)
+    @Column(name = "name")
     private String name;
 
-    @Column(name = "lastName", nullable = false)
+    @Column(name = "lastName")
     private String lastName;
 
     @Column(name = "age")
@@ -65,7 +63,12 @@ public class User {
 
     @Override
     public String toString() {
-        return getClass().getSimpleName() + '{' + " id = " + id + ", name = '" + name + '\'' + ", lastName = '" + lastName + '\'' + ", age = " + age + '}';
+        return "User(" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", age=" + age +
+                ')';
     }
 
     @Override
