@@ -5,10 +5,12 @@ import jm.task.core.jdbc.util.Util;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.springframework.stereotype.Repository;
+//import org.springframework.stereotype.Repository;
+
+import javax.transaction.Transactional;
 import java.util.List;
 
-@Repository
+//@Repository
 public class UserDaoHibernateImpl implements UserDao {
     private final SessionFactory sessionFactory;
 
